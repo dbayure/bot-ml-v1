@@ -1,37 +1,7 @@
 
-// Initialise Pusher
-const pusher = new Pusher('8120e6c2af5b35d6e48f', {
-    cluster: 'us2',
-    encrypted: true
-});
-
-// Subscribe to movie_bot channel
-const channel = pusher.subscribe('bot-ml');
-
-  // bind new_message event to movie_bot channel
-  channel.bind('new_message', function(data) {
-   // Append human message
-    $('.chat-container').append(`
-        <div class="chat-message col-md-5 human-message">
-            ${input_message} - hm
-        </div>
-    `)
-    
-    // Append bot message
-    $('.chat-container').append(`
-        <div class="chat-message col-md-5 offset-md-7 bot-message">
-            ${data.message} - dm
-        </div>
-    `)
-});
-
-
 function submit_message(message) {
 
-    $.post( "/send_message", {
-        message: message, 
-        socketId: pusher.connection.socket_id
-    }, handle_response);
+    $.post( "/send_message", { message: message, }, handle_response);
     
     function handle_response(data) {
       // append the bot repsonse to the div
